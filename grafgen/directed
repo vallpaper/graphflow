@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+ 
+import argparse
+import random 
+import subprocess
+import string
+ 
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-t', '--type', default='NAH', help='NAH | REG | AD')
+	parser.add_argument('-n', '--number', type=int, default=100, help='Pocet uzlu grafu')
+	parser.add_argument('-k', '--degree', type=int, default=13, help='Vystupni stupen uzlu')
+
+	parser.add_argument('-o', '--output', default='graph', help='nazev vystupniho souboru')
+	 
+	args = parser.parse_args()
+ 
+	# --------------------------------------------------------------------------
+ 
+ 	random.seed()
+
+	if args.type == 'NAH':
+		subprocess.call(['./generator', '-t', str(args.type), '-o', str(args.output) + "-tmp"])
+	else:
+		subprocess.call(['./generator', '-t', str(args.type), '-o', str(args.output) + "-tmp", '-n', str(args.number), '-k', str(args.degree)])
+
+	subprocess.call(['./souvislost', '-s', '-o', str(args.output) + "-tmp-2", '-i', str(args.output) + "-tmp"])
+
+	f_in = open (str(args.output) + "-tmp-2", 'r')
+	f_ou = open (str(args.output), 'w')
+
+	number = f_in.readline()
+	f_ou.write(number)
+
+	j=0
+	k=0
+	c='0'
+	for i in f_in:
+		for k in range(int(number)):
+			if ( k < j and i[k] == '1' ):
+				c = random.randint(1,19)
+			else:
+				c = '0'
+			f_ou.write(str(c))
+			if ( k < int(number) - 1 ):
+				f_ou.write(' ')
+		f_ou.write('\n')
+		k = 0
+		j += 1
+
+	subprocess.call(['rm', str(args.output) + "-tmp", str(args.output) + "-tmp-2"])
