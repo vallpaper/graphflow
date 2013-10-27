@@ -4,6 +4,7 @@ import argparse
 import random 
 import subprocess
 import string
+import sys,os
  
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
@@ -18,13 +19,14 @@ if __name__ == '__main__':
 	# --------------------------------------------------------------------------
  
  	random.seed()
+ 	print os.path.dirname(os.path.abspath(sys.argv[0]))
 
 	if args.type == 'NAH':
-		subprocess.call(['./generator', '-t', str(args.type), '-o', str(args.output) + "-tmp"])
+		subprocess.call([ os.path.dirname(os.path.abspath(sys.argv[0])) + '/generator', '-t', str(args.type), '-o', str(args.output) + "-tmp"])
 	else:
-		subprocess.call(['./generator', '-t', str(args.type), '-o', str(args.output) + "-tmp", '-n', str(args.number), '-k', str(args.degree)])
+		subprocess.call([ os.path.dirname(os.path.abspath(sys.argv[0])) + '/generator', '-t', str(args.type), '-o', str(args.output) + "-tmp", '-n', str(args.number), '-k', str(args.degree)])
 
-	subprocess.call(['./souvislost', '-s', '-o', str(args.output) + "-tmp-2", '-i', str(args.output) + "-tmp"])
+	subprocess.call([ os.path.dirname(os.path.abspath(sys.argv[0])) + '/souvislost', '-s', '-o', str(args.output) + "-tmp-2", '-i', str(args.output) + "-tmp"])
 
 	f_in = open (str(args.output) + "-tmp-2", 'r')
 	f_ou = open (str(args.output), 'w')

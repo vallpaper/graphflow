@@ -1,0 +1,15 @@
+Jak pouzivat ./grafgen/directed
+	./directed má stejnou syntaxy parametrů jako Šimečkův generátor grafů.
+	
+	-t typ : typ generovaneho grafu, kde parametr typ muze nabyvat 3 nasledujicich stringovych hodnot:
+		REG : k-regularni graf,
+		AD : graf s prumernym stupnem uzlu k,
+		NAH : nahodny graf,
+	-n cislo : pocet uzlu,
+	-k cislo : stupen uzlu,
+	-o soubor : nazev souboru, kam bude vygenerovany graf ulozen. Může být i absolutní cesta.
+
+	je to script napsaný v pythnu, takže se spouští
+		# python ./directed
+
+V adresáři examples bych shromaždoval testovací vstupy, aby jsme mohli testovat na stejných datech.
