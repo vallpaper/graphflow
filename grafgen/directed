@@ -13,13 +13,13 @@ if __name__ == '__main__':
 	parser.add_argument('-k', '--degree', type=int, default=13, help='Vystupni stupen uzlu')
 
 	parser.add_argument('-o', '--output', default='graph', help='nazev vystupniho souboru')
-	 
+
 	args = parser.parse_args()
- 
+
 	# --------------------------------------------------------------------------
- 
- 	random.seed()
- 	print os.path.dirname(os.path.abspath(sys.argv[0]))
+
+	random.seed()
+	print os.path.dirname(os.path.abspath(sys.argv[0]))
 
 	if args.type == 'NAH':
 		subprocess.call([ os.path.dirname(os.path.abspath(sys.argv[0])) + '/generator', '-t', str(args.type), '-o', str(args.output) + "-tmp"])
