@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	c='0'
 	for i in f_in:
 		for k in range(int(number)):
-			if ( k < j and i[k] == '1' ):
+			if ( k > j and i[k] == '1' ):
 				c = random.randint(1,19)
 			else:
 				c = '0'
