@@ -15,7 +15,11 @@ struct edge_capacity
 	void add_flow ( int tmp_flow )
 	{
 		s_free -= tmp_flow;
-		s_back += tmp_flow;
+		//s_back += tmp_flow;
+	}
+	void del_flow ( int tmp_flow )
+	{
+		s_back -= tmp_flow;
 	}
 
 	int s_max;
@@ -92,7 +96,18 @@ graf_class::graf_class( const char * file_name )
 
 		c_nodes . insert ( std::pair< int, std::map<int, struct edge_capacity> * >( i, tmp_nodes ) );
 	}
+	/*
+	std::map< int, std::map< int, struct edge_capacity > * >::iterator it_1;
+	std::map< int, struct edge_capacity >::iterator it_2;
 
+	for ( it_1 = c_nodes . begin (); it_1 != c_nodes . end(); it_1 ++ )
+	{
+		for ( it_2 = it_1 -> second -> begin(); it_2 != it_1 -> second -> end(); it_2 ++ )
+		{
+			c_nodes . find ( it_2 -> first ) -> second -> insert ( std::pair<int, struct edge_capacity>( it_1 -> first, edge_capacity( it_2 -> second . s_max ) ) );
+		}
+	}
+	*/
 	fclose ( f_input );
 
 }
@@ -184,8 +199,10 @@ void graf_class::add_flow	( int u, int v, int flow ) {
 		else
 		{
 			// pridání zpáteční cesty
-			c_nodes . find ( c_it_edge -> first ) -> second -> insert ( std::pair<int, struct edge_capacity>( c_it -> first, edge_capacity( c_it_edge -> second . s_max ) ) );
-			c_nodes . find ( c_it_edge -> first ) -> second -> find ( c_it -> first ) -> second . add_flow ( flow );
+			if ( c_nodes . find ( c_it_edge -> first ) -> second -> find ( c_it -> first ) == c_nodes . find ( c_it_edge -> first ) -> second -> end() )
+				c_nodes . find ( c_it_edge -> first ) -> second -> insert ( std::pair<int, struct edge_capacity>( c_it -> first, edge_capacity( c_it_edge -> second . s_max ) ) );
+			
+			c_nodes . find ( c_it_edge -> first ) -> second -> find ( c_it -> first ) -> second . del_flow ( flow );
 			return c_it_edge -> second . add_flow ( flow );
 		}
 	}

@@ -27,7 +27,6 @@ int breadth_first_search ( int * parent_table )
 
 		std::map< int, struct edge_capacity > * neighbors = graph -> neighbors ( u );
 		std::map< int, struct edge_capacity >::iterator it;
-
 		for ( it = neighbors -> begin(); it != neighbors -> end(); it ++ )
 		{
 			// stacilo by it -> second . s_free; -> budoucí optimalizace
@@ -89,7 +88,6 @@ int edm_karp ( void )
 	while ( true )
 	{
 		int flow = breadth_first_search( parent_table );
-
 		if ( flow == 0 )
 			break;
 
@@ -101,6 +99,7 @@ int edm_karp ( void )
 		{
 			int u = parent_table[ v ];
 			graph -> add_flow( u, v, flow );
+			//graph -> del_flow( v, u, flow );
 			v = u;
 		}
 		//graph -> print();
